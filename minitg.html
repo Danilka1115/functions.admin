@@ -1,0 +1,3184 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="theme-color" content="#1a1a1a">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>Видеоинструкции - электроинструмента</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    /* Telegram Theme Variables (will be set by JavaScript) */
+    --tg-theme-bg-color: #1a1a1a;
+    --tg-theme-secondary-bg-color: #2a2a2a;
+    --tg-theme-text-color: #ffffff;
+    --tg-theme-hint-color: #888888;
+    --tg-theme-link-color: #0088cc;
+    --tg-theme-button-color: #0088cc;
+    --tg-theme-button-text-color: #ffffff;
+    
+    /* Fallback colors */
+    --bg-primary: var(--tg-theme-bg-color, #1a1a1a);
+    --bg-secondary: var(--tg-theme-secondary-bg-color, #2a2a2a);
+    --bg-tertiary: #1e1e1e;
+    --accent-blue: var(--tg-theme-link-color, #0088cc);
+    --text-primary: var(--tg-theme-text-color, #ffffff);
+    --text-secondary: #b0b0b0;
+    --text-placeholder: var(--tg-theme-hint-color, #888888);
+    --grid-pattern: rgba(255, 255, 255, 0.03);
+    
+    /* Viewport variables */
+    --viewport-height: 100vh;
+    --viewport-stable-height: 100vh;
+    --safe-area-top: 0px;
+    --safe-area-bottom: 0px;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background-color: #cfcfcf;
+    color: var(--text-primary);
+    min-height: var(--viewport-height, 100vh);
+    padding-bottom: calc(80px + var(--safe-area-bottom, 0px));
+    padding-top: var(--safe-area-top, 0px);
+    overflow-x: hidden;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Telegram theme support */
+body.theme-dark {
+    --bg-primary: var(--tg-theme-bg-color, #1a1a1a);
+    --bg-secondary: var(--tg-theme-secondary-bg-color, #2a2a2a);
+    --text-primary: var(--tg-theme-text-color, #ffffff);
+}
+
+body.theme-light {
+    --bg-primary: var(--tg-theme-bg-color, #ffffff);
+    --bg-secondary: var(--tg-theme-secondary-bg-color, #f0f0f0);
+    --text-primary: var(--tg-theme-text-color, #000000);
+    --text-secondary: #666666;
+    --grid-pattern: rgba(0, 0, 0, 0.03);
+}
+
+/* App ready state */
+body.app-ready {
+    opacity: 1;
+    transition: opacity 0.3s ease;
+}
+
+body:not(.app-ready) {
+    opacity: 0;
+}
+
+/* App Header */
+.app-header {
+    background-color: var(--bg-secondary);
+    border-radius: 0 0 16px 16px;
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    color: var(--tg-theme-button-color, #9b5cff);
+    font-size: 16px;
+    cursor: pointer;
+    padding: 8px;
+    transition: opacity 0.2s ease;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.close-btn:active {
+    opacity: 0.7;
+}
+
+.header-title {
+    flex: 1;
+    text-align: center;
+}
+
+.header-spacer {
+    width: 40px;
+    height: 40px;
+}
+
+.header-title h1 {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 0;
+}
+
+.subtitle {
+    font-size: 12px;
+    color: var(--text-secondary);
+    margin: 2px 0 0 0;
+}
+
+.menu-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Main Content */
+.main-content {
+    padding: 0 16px;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* Search Bar */
+.search-container {
+    margin-bottom: 16px;
+}
+
+.search-bar {
+    background-color: var(--bg-secondary);
+    border-radius: 12px;
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.search-icon {
+    color: var(--text-placeholder);
+    flex-shrink: 0;
+}
+
+.search-input {
+    flex: 1;
+    background: none;
+    border: none;
+    color: var(--text-primary);
+    font-size: 16px;
+    outline: none;
+}
+
+.search-input::placeholder {
+    color: var(--text-placeholder);
+}
+
+/* Tools page */
+.tools-page {
+    display: none;
+    padding: 0 16px 24px;
+}
+
+.tools-page.active {
+    display: block;
+}
+
+.tools-page.active ~ .content-grid {
+    display: none;
+}
+
+.tools-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 8px 0 14px;
+}
+
+.tools-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.tools-back {
+    background: none;
+    border: none;
+    color: var(--accent-blue);
+    font-size: 14px;
+    cursor: pointer;
+    padding: 6px 8px;
+}
+
+.tools-search {
+    margin-bottom: 12px;
+}
+
+.tools-sort {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--text-secondary);
+    font-size: 13px;
+    margin-bottom: 14px;
+}
+
+.tools-list {
+    display: grid;
+    gap: 12px;
+}
+
+.tools-card {
+    background: var(--bg-secondary);
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.tools-card-media {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    background: #1a1a1a;
+}
+
+.tools-card-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.tools-card-badge {
+    position: absolute;
+    left: 10px;
+    bottom: 10px;
+    background: rgba(0, 0, 0, 0.7);
+    color: #ffffff;
+    font-size: 12px;
+    padding: 4px 8px;
+    border-radius: 10px;
+}
+
+.tools-card-body {
+    padding: 12px 14px 14px;
+}
+
+.tools-card-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 6px;
+}
+
+.tools-card-desc {
+    font-size: 12px;
+    color: var(--text-secondary);
+    line-height: 1.4;
+}
+
+.videos-page {
+    display: none;
+}
+
+.videos-page.active {
+    display: block;
+}
+
+/* Catalog Page */
+.catalog-page {
+    display: none;
+    padding: 0 16px 24px;
+}
+
+.catalog-page.active {
+    display: block;
+}
+
+.catalog-page.active ~ .content-grid {
+    display: none;
+}
+
+.catalog-content {
+    padding-top: 8px;
+}
+
+/* My Tools Page (Purchased Tools) */
+.my-tools-page {
+    display: none;
+    padding: 0 16px 24px;
+}
+
+.my-tools-page.active {
+    display: block;
+}
+
+.my-tools-page.active ~ .content-grid,
+.content-grid:has(~ .my-tools-page.active) {
+    display: none;
+}
+
+/* Альтернативный способ скрытия для браузеров без поддержки :has() */
+body:has(.my-tools-page.active) .content-grid {
+    display: none;
+}
+
+.my-tools-content {
+    min-height: 60vh;
+}
+
+.refresh-btn {
+    background: none;
+    border: none;
+    color: var(--accent-blue);
+    cursor: pointer;
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    transition: background-color 0.2s;
+}
+
+.refresh-btn:active {
+    background-color: rgba(0, 136, 204, 0.1);
+}
+
+.refresh-btn svg {
+    animation: none;
+}
+
+.refresh-btn.loading svg {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.my-tools-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 20px;
+    text-align: center;
+}
+
+.empty-icon {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 20px;
+    opacity: 0.5;
+    color: var(--text-secondary);
+}
+
+.my-tools-empty h3 {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+}
+
+.my-tools-empty p {
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin-bottom: 24px;
+}
+
+.my-tools-list {
+    display: grid;
+    gap: 12px;
+}
+
+.my-tool-card {
+    background: var(--bg-secondary);
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    gap: 12px;
+    padding: 12px;
+    align-items: center;
+}
+
+.my-tool-image {
+    width: 100px;
+    height: 100px;
+    border-radius: 12px;
+    background: #1a1a1a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.my-tool-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.my-tool-info {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.my-tool-name {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1.3;
+}
+
+.my-tool-date {
+    font-size: 12px;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.my-tool-date svg {
+    width: 14px;
+    height: 14px;
+}
+
+.my-tool-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 8px;
+}
+
+.my-tool-action-btn {
+    flex: 1;
+    padding: 8px 12px;
+    font-size: 13px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+
+.my-tool-action-btn:active {
+    opacity: 0.8;
+}
+
+.my-tool-action-btn.primary {
+    background-color: var(--tg-theme-button-color, var(--accent-blue));
+    color: var(--tg-theme-button-text-color, #ffffff);
+}
+
+.my-tool-action-btn.secondary {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: var(--text-primary);
+}
+
+/* Promo Section */
+.promo-section {
+    background: linear-gradient(135deg, var(--accent-blue) 0%, #0066aa 100%);
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 24px;
+}
+
+.promo-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.promo-icon {
+    flex-shrink: 0;
+    width: 48px;
+    height: 48px;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.promo-content h2 {
+    font-size: 18px;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 4px;
+}
+
+.promo-content p {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.9);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.chevron {
+    font-size: 16px;
+    margin-left: 4px;
+}
+
+.promo-stats {
+    display: flex;
+    justify-content: space-around;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    padding-top: 16px;
+    gap: 12px;
+}
+
+.stat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    flex: 1;
+}
+
+.stat-number {
+    font-size: 20px;
+    font-weight: 700;
+    color: white;
+}
+
+.stat-label {
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.8);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Content Grid */
+.content-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.grid-item {
+    background-color: #d9d9d9;
+    border-radius: 16px;
+    padding: 20px;
+    position: relative;
+    cursor: pointer;
+    transition: transform 0.2s, background-color 0.2s;
+    background-image: none;
+    min-height: 180px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+}
+
+.grid-item:active {
+    transform: scale(0.98);
+    background-color: var(--bg-secondary);
+    transition: transform 0.1s, background-color 0.1s;
+}
+
+.item-icon {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 20px 0;
+    width: 150px;
+    height: 150px;
+    align-self: center;
+    background: transparent;
+    border-radius: 10px;
+}
+
+.grid-item.is-jigsaw .item-icon {
+    width: 170px;
+    height: 170px;
+}
+
+.item-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 0;
+    display: block;
+    border-radius: 10px;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
+    filter: saturate(1.08) contrast(1.05) brightness(0.98);
+    transform: scale(var(--img-scale, 1));
+    transform-origin: center;
+}
+
+
+.grid-item h3 {
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #000000;
+    text-align: center;
+    line-height: 1.3;
+    margin: 0;
+}
+
+/* Product Section */
+.product-section {
+    margin-top: 20px;
+}
+
+.product-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+}
+
+.product-card {
+    background-color: #e3e3e3;
+    border-radius: 16px;
+    padding: 12px;
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 12px;
+    align-items: center;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.product-image {
+    width: 80px;
+    height: 80px;
+    border-radius: 12px;
+    background: #f2f2f2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.product-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.product-meta h3 {
+    font-size: 14px;
+    font-weight: 700;
+    color: #000000;
+    margin: 0 0 6px 0;
+}
+
+.product-meta p {
+    font-size: 12px;
+    color: #333333;
+    margin: 0 0 8px 0;
+}
+
+.product-action {
+    display: inline-flex;
+    justify-content: center;
+    width: fit-content;
+    padding: 8px 12px;
+    font-size: 13px;
+    border-radius: 8px;
+}
+
+/* Videos Section */
+.videos-section {
+    margin-top: 24px;
+    scroll-margin-top: 16px;
+}
+
+.section-header {
+    margin-bottom: 12px;
+}
+
+.section-header h2 {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 6px;
+}
+
+.section-header p {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.4;
+}
+
+.video-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+}
+
+.video-card {
+    background-color: var(--bg-secondary);
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.video-thumb {
+    aspect-ratio: 16 / 9;
+    background:
+        radial-gradient(1200px 300px at 20% 30%, rgba(0, 136, 204, 0.25), transparent 60%),
+        radial-gradient(900px 260px at 80% 10%, rgba(255, 255, 255, 0.06), transparent 55%),
+        linear-gradient(135deg, rgba(0, 136, 204, 0.18), rgba(0, 0, 0, 0.05));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.video-thumb svg {
+    width: 56px;
+    height: 56px;
+    opacity: 0.9;
+}
+
+.video-meta {
+    padding: 14px 14px 16px 14px;
+}
+
+.video-meta h3 {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 6px;
+    line-height: 1.35;
+}
+
+.video-meta p {
+    font-size: 12px;
+    color: var(--text-secondary);
+    line-height: 1.4;
+    margin-bottom: 12px;
+}
+
+.video-actions {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.video-open.telegram-button {
+    width: 100%;
+    padding: 10px 14px;
+    font-size: 14px;
+    border-radius: 10px;
+}
+
+/* No results message */
+.no-results-message {
+    margin-top: 24px;
+    padding: 40px 20px;
+    text-align: center;
+}
+
+.no-results-message svg {
+    margin-bottom: 16px;
+    opacity: 0.5;
+    color: var(--text-secondary);
+}
+
+.no-results-message h3 {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+}
+
+.no-results-message p {
+    font-size: 14px;
+    color: var(--text-secondary);
+}
+
+/* Bottom Navigation */
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: var(--bg-secondary);
+    border-radius: 16px 16px 0 0;
+    padding: 8px 0;
+    padding-bottom: calc(8px + var(--safe-area-bottom, 0px));
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.nav-item {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    color: var(--text-secondary);
+    transition: color 0.2s, transform 0.1s;
+    flex: 1;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+    pointer-events: auto;
+    position: relative;
+    z-index: 1;
+}
+
+.nav-item:active {
+    transform: scale(0.95);
+}
+
+.nav-item.active {
+    color: var(--accent-blue);
+}
+
+.nav-item span {
+    font-size: 11px;
+    font-weight: 500;
+}
+
+.nav-icon {
+    width: 24px;
+    height: 24px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+/* Responsive adjustments */
+@media (max-width: 375px) {
+    .grid-item h3 {
+        font-size: 12px;
+    }
+    
+    .promo-content h2 {
+        font-size: 16px;
+    }
+    
+    .stat-number {
+        font-size: 18px;
+    }
+}
+
+/* Safe area for devices with notches */
+@supports (padding: max(0px)) {
+    .bottom-nav {
+        padding-bottom: max(8px, env(safe-area-inset-bottom), var(--safe-area-bottom, 0px));
+    }
+    
+    body {
+        padding-bottom: max(80px, calc(80px + env(safe-area-inset-bottom)), calc(80px + var(--safe-area-bottom, 0px)));
+    }
+}
+
+/* Telegram-specific styles */
+.telegram-button {
+    background-color: var(--tg-theme-button-color, var(--accent-blue));
+    color: var(--tg-theme-button-text-color, #ffffff);
+    border: none;
+    border-radius: 8px;
+    padding: 12px 24px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.telegram-button:active {
+    opacity: 0.8;
+}
+
+/* Loading state */
+.loading {
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+/* Smooth transitions for theme changes */
+* {
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Modal */
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.55);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+    z-index: 2000;
+}
+
+.modal-overlay.open {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.modal-card {
+    width: 100%;
+    max-width: 420px;
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    border-radius: 16px;
+    padding: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+}
+
+.modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 10px;
+}
+
+.modal-header h2 {
+    font-size: 16px;
+    font-weight: 700;
+    margin: 0;
+}
+
+.modal-close {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--text-primary);
+    font-size: 20px;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.modal-body {
+    font-size: 13px;
+    color: var(--text-secondary);
+}
+
+.modal-lead {
+    margin: 0 0 8px 0;
+}
+
+.modal-list {
+    display: grid;
+    gap: 10px;
+}
+
+.modal-item {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 10px 12px;
+}
+
+.modal-item-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: #000000;
+    margin-bottom: 6px;
+}
+
+.modal-link {
+    color: var(--accent-blue);
+    text-decoration: none;
+    font-size: 13px;
+}
+
+.modal-actions {
+    margin-top: 14px;
+}
+
+.modal-action {
+    display: inline-flex;
+    width: 100%;
+    justify-content: center;
+    text-decoration: none;
+}
+
+.modal-grid {
+    grid-template-columns: repeat(2, 1fr);
+    margin-bottom: 12px;
+}
+
+.modal-grid .grid-item {
+    cursor: default;
+}
+    </style>
+</head>
+<body class="app-ready">
+    <!-- App Header -->
+    <header class="app-header">
+        <span class="header-spacer" aria-hidden="true"></span>
+        <div class="header-title">
+            <h1>Электроинсрументы</h1>
+        </div>
+        <button class="menu-btn">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <circle cx="12" cy="6" r="2" fill="#0088cc"/>
+                <circle cx="12" cy="12" r="2" fill="#0088cc"/>
+                <circle cx="12" cy="18" r="2" fill="#0088cc"/>
+            </svg>
+        </button>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Tools Page (Drills & Screwdrivers) -->
+        <section class="tools-page" id="tools-page">
+            <div class="tools-header">
+                <button class="tools-back" id="tools-back">← Назад</button>
+                <span></span>
+                <span></span>
+            </div>
+            <div class="tools-search">
+                <div class="search-bar">
+                    <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none">
+                        <circle cx="11" cy="11" r="8" stroke="currentColor" stroke-width="2"/>
+                        <path d="m21 21-4.35-4.35" stroke="currentColor" stroke-width="2"/>
+                    </svg>
+                    <input type="text" placeholder="Поиск инструмента..." class="search-input" id="tools-search-input">
+                </div>
+            </div>
+            <div class="tools-sort">
+                <span>Сначала новые</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                    <path d="M7 10l5 5 5-5" stroke="currentColor" stroke-width="2" fill="none"/>
+                </svg>
+            </div>
+            <div class="tools-list">
+                <article class="tools-card">
+                    <div class="tools-card-media">
+                        <img src="https://storage.yandexcloud.net/miniappp/assets/drill.webp" alt="Дрель APEXWOLT 48В">
+                    </div>
+                    <div class="tools-card-body">
+                        <div class="tools-card-title">APEXWOLT 48В</div>
+                        <div class="tools-card-desc">Схема управления, выбор скоростей и настройка момента. Рекомендации по сверлению и закручиванию.</div>
+                    </div>
+                </article>
+                <article class="tools-card">
+                    <div class="tools-card-media">
+                        <img src="https://storage.yandexcloud.net/miniappp/assets/drill.webp" alt="Дрель APEXWOLT 18В">
+                    </div>
+                    <div class="tools-card-body">
+                        <div class="tools-card-title">APEXWOLT 18В</div>
+                        <div class="tools-card-desc">Порядок подготовки к работе, подбор бит и сверл, техника безопасности и уход после использования.</div>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <!-- Catalog Page (Drills & Screwdrivers Catalog) -->
+        <section class="catalog-page" id="catalog-page">
+            <div class="tools-header">
+                <button class="tools-back" id="catalog-back">← Назад</button>
+                <span></span>
+                <span></span>
+            </div>
+            
+            <div class="catalog-content">
+                <div class="section-header" style="margin-bottom: 20px;">
+                    <h2 style="font-size: 20px; font-weight: 700; color: var(--text-primary); margin-bottom: 8px;">Каталог: Дрели и шуруповерты</h2>
+                    <p style="font-size: 14px; color: var(--text-secondary); line-height: 1.4;">Популярные модели инструментов</p>
+                </div>
+                
+                <div class="catalog-list">
+                    <div class="catalog-item" style="background-color: var(--bg-secondary); border-radius: 16px; padding: 16px; margin-bottom: 12px; border: 1px solid rgba(255, 255, 255, 0.06);">
+                        <div style="display: flex; align-items: center; gap: 12px;">
+                            <div style="width: 100px; height: 100px; border-radius: 12px; background: #1a1a1a; display: flex; align-items: center; justify-content: center; overflow: hidden; flex-shrink: 0;">
+                                <img src="https://storage.yandexcloud.net/miniappp/assets/drill.webp" alt="APEXWOLT 48В" style="width: 100%; height: 100%; object-fit: contain;">
+                            </div>
+                            <div style="flex: 1;">
+                                <div style="font-size: 16px; font-weight: 700; color: var(--text-primary); margin-bottom: 6px;">APEXWOLT 48В</div>
+                                <div style="font-size: 13px; color: var(--text-secondary); margin-bottom: 12px; line-height: 1.4;">Мощная аккумуляторная дрель-шуруповерт с высоким крутящим моментом</div>
+                                <a href="https://теплыйдом38.рф/братск/?ysclid=mki3mdiiw2874168637" target="_blank" rel="noopener" class="telegram-button catalog-link" data-url="https://теплыйдом38.рф/братск/?ysclid=mki3mdiiw2874168637" style="display: inline-block; padding: 10px 20px; font-size: 14px; text-decoration: none; text-align: center; width: 100%;">🌐 Смотреть в каталоге</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="catalog-item" style="background-color: var(--bg-secondary); border-radius: 16px; padding: 16px; margin-bottom: 12px; border: 1px solid rgba(255, 255, 255, 0.06);">
+                        <div style="display: flex; align-items: center; gap: 12px;">
+                            <div style="width: 100px; height: 100px; border-radius: 12px; background: #1a1a1a; display: flex; align-items: center; justify-content: center; overflow: hidden; flex-shrink: 0;">
+                                <img src="https://storage.yandexcloud.net/miniappp/assets/drill.webp" alt="APEXWOLT 18В" style="width: 100%; height: 100%; object-fit: contain;">
+                            </div>
+                            <div style="flex: 1;">
+                                <div style="font-size: 16px; font-weight: 700; color: var(--text-primary); margin-bottom: 6px;">APEXWOLT 18В</div>
+                                <div style="font-size: 13px; color: var(--text-secondary); margin-bottom: 12px; line-height: 1.4;">Компактная дрель-шуруповерт для дома и дачи</div>
+                                <a href="https://теплыйдом38.рф/братск/?ysclid=mki3mdiiw2874168637" target="_blank" rel="noopener" class="telegram-button catalog-link" data-url="https://теплыйдом38.рф/братск/?ysclid=mki3mdiiw2874168637" style="display: inline-block; padding: 10px 20px; font-size: 14px; text-decoration: none; text-align: center; width: 100%;">🌐 Смотреть в каталоге</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="catalog-item" style="background-color: var(--bg-secondary); border-radius: 16px; padding: 16px; margin-bottom: 12px; border: 1px solid rgba(255, 255, 255, 0.06);">
+                        <div style="display: flex; align-items: center; gap: 12px;">
+                            <div style="width: 100px; height: 100px; border-radius: 12px; background: #1a1a1a; display: flex; align-items: center; justify-content: center; overflow: hidden; flex-shrink: 0;">
+                                <img src="https://storage.yandexcloud.net/miniappp/assets/drill.webp" alt="Компактные модели" style="width: 100%; height: 100%; object-fit: contain;">
+                            </div>
+                            <div style="flex: 1;">
+                                <div style="font-size: 16px; font-weight: 700; color: var(--text-primary); margin-bottom: 6px;">Компактные модели для дома</div>
+                                <div style="font-size: 13px; color: var(--text-secondary); margin-bottom: 12px; line-height: 1.4;">Легкие и удобные модели для бытового использования</div>
+                                <a href="https://теплыйдом38.рф/братск/?ysclid=mki3mdiiw2874168637" target="_blank" rel="noopener" class="telegram-button catalog-link" data-url="https://теплыйдом38.рф/братск/?ysclid=mki3mdiiw2874168637" style="display: inline-block; padding: 10px 20px; font-size: 14px; text-decoration: none; text-align: center; width: 100%;">🌐 Смотреть в каталоге</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- My Tools Page (Purchased Tools) -->
+        <section class="my-tools-page" id="my-tools-page">
+            <div class="tools-header">
+                <span></span>
+                <span></span>
+                <button class="refresh-btn" id="refresh-purchases" title="Обновить список покупок" style="cursor: pointer; pointer-events: auto;">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                        <path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="my-tools-content">
+                <div class="my-tools-empty" id="my-tools-empty" style="display: none;">
+                    <div class="empty-icon">
+                        <svg width="64" height="64" viewBox="0 0 24 24" fill="none">
+                            <path d="M14.7 6.3a3 3 0 0 0-4.2 4.2L3 18l3 3 7.5-7.5a3 3 0 0 0 4.2-4.2l-3 3-3-3 3-3z" stroke="currentColor" stroke-width="2" fill="none" stroke-linejoin="round" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                    <h3>У вас пока нет инструментов</h3>
+                    <p>Купленные инструменты будут отображаться здесь</p>
+                    <button class="telegram-button" onclick="showWhereToBuy()">Где купить?</button>
+                </div>
+                <div class="my-tools-list" id="my-tools-list">
+                    <!-- Список купленных инструментов будет добавлен динамически -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Content Grid -->
+        <div class="content-grid">
+            <div class="grid-item">
+                <div class="item-icon">
+                    <img style="--img-scale: 1.15" src="https://storage.yandexcloud.net/miniappp/assets/drill.webp" alt="Дрель и шуруповерт">
+                </div>
+                <h3>ДРЕЛИ И<br>ШУРУПОВЕРТЫ</h3>
+            </div>
+
+            <div class="grid-item" data-url="https://t.me/APEXWOLT1/10">
+                <div class="item-icon">
+                    <img style="--img-scale: 1.15" src="https://storage.yandexcloud.net/miniappp/assets/grinder.webp" alt="Болгарка (УШМ)">
+                </div>
+                <h3>БОЛГАРКИ<br>(УШМ)</h3>
+            </div>
+
+            <div class="grid-item is-jigsaw">
+                <div class="item-icon">
+                    <img src="assets/photolobzik-miniapp.png" alt="Лобзик">
+                </div>
+                <h3>ЛОБЗИКИ</h3>
+            </div>
+
+            <div class="grid-item">
+                <div class="item-icon">
+                    <img style="--img-scale: 1.1" src="assets/impact-48v-miniapp.png" alt="Гайковерт">
+                </div>
+                <h3>ГАЙКОВЕРТЫ</h3>
+            </div>
+
+        </div>
+        <section class="videos-page" id="videos-page">
+            <!-- Promo Section -->
+            <div class="promo-section">
+                <div class="promo-header">
+                    <div class="promo-icon">
+                        <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+                            <rect x="8" y="10" width="24" height="18" rx="2" stroke="white" stroke-width="2" fill="none"/>
+                            <polygon points="8,10 20,18 32,10" fill="white"/>
+                            <circle cx="20" cy="19" r="3" fill="#0088cc"/>
+                        </svg>
+                    </div>
+                    <div class="promo-content">
+                        <h2>Новые видеоинструкции</h2>
+                        <p>Смотрите последние обновления <span class="chevron">></span></p>
+                    </div>
+                </div>
+                <div class="promo-stats">
+                    <div class="stat-item">
+                        <span class="stat-number">250+</span>
+                        <span class="stat-label">Видео</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">50+</span>
+                        <span class="stat-label">Инструментов</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">24/7</span>
+                        <span class="stat-label">Доступ</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Search Bar -->
+            <div class="search-container">
+                <div class="search-bar">
+                    <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none">
+                        <circle cx="11" cy="11" r="8" stroke="currentColor" stroke-width="2"/>
+                        <path d="m21 21-4.35-4.35" stroke="currentColor" stroke-width="2"/>
+                    </svg>
+                    <input type="text" placeholder="Поиск видео..." class="search-input" id="videos-search-input">
+                </div>
+            </div>
+
+            <!-- Videos Section -->
+            <section id="videos-section" class="videos-section">
+                <div class="section-header">
+                    <h2>Видеообзоры электроинструмента</h2>
+                    <p>Подборка обзоров и тестов: шуруповёрты, УШМ, перфораторы, пилы и шлифмашины. Нажмите «Открыть», чтобы посмотреть в YouTube.</p>
+                </div>
+
+                <div class="video-grid">
+                    <article class="video-card">
+                        <div class="video-thumb" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none">
+                                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" opacity="0.7"/>
+                                <polygon points="10 8 17 12 10 16" fill="currentColor"/>
+                            </svg>
+                        </div>
+                        <div class="video-meta">
+                            <h3>Обзор аккумуляторного шуруповёрта 18V: крутящий момент и тест под нагрузкой</h3>
+                            <p>На что смотреть при выборе: патрон, редуктор, аккумуляторы, баланс и эргономика.</p>
+                            <div class="video-actions">
+                                <button class="video-open telegram-button" data-url="https://www.youtube.com/results?search_query=%D0%BE%D0%B1%D0%B7%D0%BE%D1%80+%D0%B0%D0%BA%D0%BA%D1%83%D0%BC%D1%83%D0%BB%D1%8F%D1%82%D0%BE%D1%80%D0%BD%D1%8B%D0%B9+%D1%88%D1%83%D1%80%D1%83%D0%BF%D0%BE%D0%B2%D0%B5%D1%80%D1%82+18v+%D1%82%D0%B5%D1%81%D1%82">Открыть</button>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="video-card">
+                        <div class="video-thumb" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none">
+                                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" opacity="0.7"/>
+                                <polygon points="10 8 17 12 10 16" fill="currentColor"/>
+                            </svg>
+                        </div>
+                        <div class="video-meta">
+                            <h3>УШМ (болгарка) 125 мм: обзор, безопасность и выбор дисков</h3>
+                            <p>Кожух, плавный пуск, обороты, диски по металлу/камню — что важно для работы.</p>
+                            <div class="video-actions">
+                                <button class="video-open telegram-button" data-url="https://www.youtube.com/results?search_query=%D0%BE%D0%B1%D0%B7%D0%BE%D1%80+%D1%83%D1%88%D0%BC+125+%D0%B1%D0%BE%D0%BB%D0%B3%D0%B0%D1%80%D0%BA%D0%B0+%D0%B1%D0%B5%D0%B7%D0%BE%D0%BF%D0%B0%D1%81%D0%BD%D0%BE%D1%81%D1%82%D1%8C+%D0%B4%D0%B8%D1%81%D0%BA%D0%B8">Открыть</button>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="video-card">
+                        <div class="video-thumb" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none">
+                                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" opacity="0.7"/>
+                                <polygon points="10 8 17 12 10 16" fill="currentColor"/>
+                            </svg>
+                        </div>
+                        <div class="video-meta">
+                            <h3>Перфоратор SDS-Plus: обзор режимов, буров и типичных ошибок</h3>
+                            <p>Сравнение «сверление/удар/долбление», выбор буров и уход за патроном.</p>
+                            <div class="video-actions">
+                                <button class="video-open telegram-button" data-url="https://www.youtube.com/results?search_query=%D0%BE%D0%B1%D0%B7%D0%BE%D1%80+%D0%BF%D0%B5%D1%80%D1%84%D0%BE%D1%80%D0%B0%D1%82%D0%BE%D1%80+sds-plus+%D1%80%D0%B5%D0%B6%D0%B8%D0%BC%D1%8B+%D0%B1%D1%83%D1%80%D1%8B">Открыть</button>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="video-card">
+                        <div class="video-thumb" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none">
+                                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" opacity="0.7"/>
+                                <polygon points="10 8 17 12 10 16" fill="currentColor"/>
+                            </svg>
+                        </div>
+                        <div class="video-meta">
+                            <h3>Циркулярная пила: обзор дисков, настройка глубины и ровный рез</h3>
+                            <p>Как выбрать диск под материал, настроить параллельный упор и избежать сколов.</p>
+                            <div class="video-actions">
+                                <button class="video-open telegram-button" data-url="https://www.youtube.com/results?search_query=%D0%BE%D0%B1%D0%B7%D0%BE%D1%80+%D1%86%D0%B8%D1%80%D0%BA%D1%83%D0%BB%D1%8F%D1%80%D0%BD%D0%B0%D1%8F+%D0%BF%D0%B8%D0%BB%D0%B0+%D0%B4%D0%B8%D1%81%D0%BA%D0%B8+%D0%BD%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B9%D0%BA%D0%B0+%D1%80%D0%B5%D0%B7">Открыть</button>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="video-card">
+                        <div class="video-thumb" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none">
+                                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" opacity="0.7"/>
+                                <polygon points="10 8 17 12 10 16" fill="currentColor"/>
+                            </svg>
+                        </div>
+                        <div class="video-meta">
+                            <h3>Эксцентриковая шлифмашина: обзор, пылеудаление и выбор зерна</h3>
+                            <p>Как подобрать абразив и настроить рабочий процесс, чтобы не «жечь» поверхность.</p>
+                            <div class="video-actions">
+                                <button class="video-open telegram-button" data-url="https://www.youtube.com/results?search_query=%D0%BE%D0%B1%D0%B7%D0%BE%D1%80+%D1%8D%D0%BA%D1%81%D1%86%D0%B5%D0%BD%D1%82%D1%80%D0%B8%D0%BA%D0%BE%D0%B2%D0%B0%D1%8F+%D1%88%D0%BB%D0%B8%D1%84%D0%BC%D0%B0%D1%88%D0%B8%D0%BD%D0%B0+%D0%BF%D1%8B%D0%BB%D0%B5%D1%83%D0%B4%D0%B0%D0%BB%D0%B5%D0%BD%D0%B8%D0%B5+%D0%B7%D0%B5%D1%80%D0%BD%D0%BE">Открыть</button>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </section>
+        </section>
+    </main>
+
+    <!-- Bottom Navigation -->
+    <nav class="bottom-nav">
+        <button class="nav-item active">
+            <svg class="nav-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" stroke="currentColor" stroke-width="2" fill="none"/>
+                <polyline points="9 22 9 12 15 12 15 22" stroke="currentColor" stroke-width="2" fill="none"/>
+            </svg>
+            <span>Главная</span>
+        </button>
+        <button class="nav-item">
+            <svg class="nav-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor" stroke-width="2" fill="none"/>
+                <polygon points="8 3 8 21 16 12" fill="currentColor"/>
+            </svg>
+            <span>Видео</span>
+        </button>
+        <button class="nav-item" id="nav-my-tools">
+            <svg class="nav-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path d="M14.7 6.3a3 3 0 0 0-4.2 4.2L3 18l3 3 7.5-7.5a3 3 0 0 0 4.2-4.2l-3 3-3-3 3-3z" stroke="currentColor" stroke-width="2" fill="none" stroke-linejoin="round" stroke-linecap="round"/>
+            </svg>
+            <span>Мои инструменты</span>
+        </button>
+        <button class="nav-item">
+            <svg class="nav-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" stroke="currentColor" stroke-width="2" fill="none"/>
+            </svg>
+            <span>Чат с поддержкой</span>
+        </button>
+        <button class="nav-item" id="nav-where-buy" data-action="where-buy" aria-label="Где купить?">
+            <svg class="nav-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" stroke="currentColor" stroke-width="2" fill="none"/>
+                <line x1="3" y1="6" x2="21" y2="6" stroke="currentColor" stroke-width="2"/>
+                <path d="M16 10a4 4 0 0 1-8 0" stroke="currentColor" stroke-width="2" fill="none"/>
+            </svg>
+            <span>Где купить?</span>
+        </button>
+    </nav>
+
+    <!-- Where to buy modal -->
+    <div class="modal-overlay" id="where-buy-modal" aria-hidden="true">
+        <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="where-buy-title">
+            <div class="modal-header">
+                <h2 id="where-buy-title">Где купить?</h2>
+            </div>
+            <div class="modal-body">
+                <p class="modal-lead">Наши магазины:</p>
+                <div class="modal-list">
+                    <div class="modal-item">
+                        <div class="modal-item-title">Братск, Южная, 14Б, стр. 1</div>
+                        <a class="modal-link" href="tel:+79247000952">📞 +7 (924) 700-09-52</a>
+                    </div>
+                    <div class="modal-item">
+                        <div class="modal-item-title">Братск, Индустриальный проезд, 11</div>
+                        <a class="modal-link" href="tel:+79247000952">📞 +7 (924) 700-09-52</a>
+                    </div>
+                    <div class="modal-item">
+                        <div class="modal-item-title">Усть-Илимск, проспект Мира, 41</div>
+                        <a class="modal-link" href="tel:+79247177569">📞 +7 (924) 717-75-69</a>
+                    </div>
+                    <div class="modal-item">
+                        <div class="modal-item-title">Нижнеудинск, Масловского, 43</div>
+                        <a class="modal-link" href="tel:+79247001058">📞 +7 (924) 700-10-58</a>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-actions">
+                <a class="telegram-button modal-action" href="https://теплыйдом38.рф/братск/?ysclid=mki3mdiiw2874168637" target="_blank" rel="noopener">🌐 Открыть магазин</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Drill catalog modal -->
+    <div class="modal-overlay" id="drill-catalog-modal" aria-hidden="true">
+        <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="drill-catalog-title">
+            <div class="modal-header">
+                <h2 id="drill-catalog-title">Каталог: дрели и шуруповерты</h2>
+                <button class="modal-close" type="button" aria-label="Закрыть">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="content-grid modal-grid">
+                    <div class="grid-item">
+                        <div class="item-icon">
+                            <img style="--img-scale: 1.15" src="https://storage.yandexcloud.net/miniappp/assets/drill.webp" alt="Дрель и шуруповерт">
+                        </div>
+                    </div>
+                </div>
+                <p class="modal-lead">Популярные модели:</p>
+                <div class="modal-list">
+                    <div class="modal-item">
+                        <div class="modal-item-title">APEXWOLT 48В</div>
+                        <a class="modal-link" href="https://теплыйдом38.рф/братск/?ysclid=mki3mdiiw2874168637" target="_blank" rel="noopener">🌐 Смотреть в каталоге</a>
+                    </div>
+                    <div class="modal-item">
+                        <div class="modal-item-title">APEXWOLT 18В</div>
+                        <a class="modal-link" href="https://теплыйдом38.рф/братск/?ysclid=mki3mdiiw2874168637" target="_blank" rel="noopener">🌐 Смотреть в каталоге</a>
+                    </div>
+                    <div class="modal-item">
+                        <div class="modal-item-title">Компактные модели для дома</div>
+                        <a class="modal-link" href="https://теплыйдом38.рф/братск/?ysclid=mki3mdiiw2874168637" target="_blank" rel="noopener">🌐 Смотреть в каталоге</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+// ============================================
+// Telegram WebApp API Integration
+// ============================================
+
+// Check if running in Telegram
+const isTelegram = window.Telegram && window.Telegram.WebApp;
+let tg = null;
+
+if (isTelegram) {
+    tg = window.Telegram.WebApp;
+    
+    // Initialize Telegram WebApp
+    if (tg.ready) {
+        tg.ready();
+    }
+    if (tg.expand) {
+        tg.expand(); // Expand to full height
+    }
+    
+    // Enable closing confirmation (if supported)
+    if (tg.enableClosingConfirmation) {
+        tg.enableClosingConfirmation();
+    }
+    
+    // Set up theme colors based on Telegram theme
+    try {
+        applyTelegramTheme();
+    } catch (e) {
+        console.warn('applyTelegramTheme error:', e);
+    }
+    
+    // Listen to theme changes
+    if (tg.onEvent) {
+        tg.onEvent('themeChanged', applyTelegramTheme);
+    }
+    
+    // Listen to viewport changes
+    if (tg.onEvent) {
+        tg.onEvent('viewportChanged', handleViewportChange);
+    }
+    
+    // Set up back button
+    try {
+        setupBackButton();
+    } catch (e) {
+        console.warn('setupBackButton error:', e);
+    }
+} else {
+    // Fallback for development/testing outside Telegram
+    console.warn('Running outside Telegram. Some features may not work.');
+    tg = {
+        close: () => console.log('Close app'),
+        showAlert: (msg) => alert(msg),
+        showPopup: (options, callback) => {
+            const result = confirm(options.message || '');
+            if (callback) callback(result ? 'ok' : 'cancel');
+        },
+        HapticFeedback: {
+            impactOccurred: () => {},
+            notificationOccurred: () => {}
+        },
+        platform: 'unknown',
+        initDataUnsafe: {},
+        version: '6.0'
+    };
+}
+
+// ============================================
+// Theme Management
+// ============================================
+
+function applyTelegramTheme() {
+    if (!tg) return;
+    
+    const colorScheme = tg.colorScheme || 'light';
+    const themeParams = tg.themeParams || {};
+    
+    // Get colors from Telegram theme or use defaults
+    const bgColor = themeParams.bg_color || (colorScheme === 'dark' ? '#1a1a1a' : '#ffffff');
+    const secondaryBgColor = themeParams.secondary_bg_color || (colorScheme === 'dark' ? '#2a2a2a' : '#f0f0f0');
+    const textColor = themeParams.text_color || (colorScheme === 'dark' ? '#ffffff' : '#000000');
+    const hintColor = themeParams.hint_color || (colorScheme === 'dark' ? '#888888' : '#999999');
+    const linkColor = themeParams.link_color || '#0088cc';
+    const buttonColor = themeParams.button_color || '#0088cc';
+    const buttonTextColor = themeParams.button_text_color || '#ffffff';
+    
+    // Apply colors to Telegram
+    tg.setHeaderColor(secondaryBgColor);
+    tg.setBackgroundColor(bgColor);
+    
+    // Apply CSS variables
+    document.documentElement.style.setProperty('--tg-theme-bg-color', bgColor);
+    document.documentElement.style.setProperty('--tg-theme-secondary-bg-color', secondaryBgColor);
+    document.documentElement.style.setProperty('--tg-theme-text-color', textColor);
+    document.documentElement.style.setProperty('--tg-theme-hint-color', hintColor);
+    document.documentElement.style.setProperty('--tg-theme-link-color', linkColor);
+    document.documentElement.style.setProperty('--tg-theme-button-color', buttonColor);
+    document.documentElement.style.setProperty('--tg-theme-button-text-color', buttonTextColor);
+    
+    // Update body class for theme
+    document.body.classList.toggle('theme-dark', colorScheme === 'dark');
+    document.body.classList.toggle('theme-light', colorScheme === 'light');
+}
+
+// ============================================
+// Viewport Management
+// ============================================
+
+function handleViewportChange(event) {
+    if (!tg) return;
+    
+    const viewportHeight = tg.viewportHeight || window.innerHeight;
+    const viewportStableHeight = tg.viewportStableHeight || viewportHeight;
+    
+    // Adjust layout for viewport changes
+    document.documentElement.style.setProperty('--viewport-height', `${viewportHeight}px`);
+    document.documentElement.style.setProperty('--viewport-stable-height', `${viewportStableHeight}px`);
+    
+    // Handle safe area insets
+    const safeArea = tg.safeAreaInsets || {};
+    if (safeArea.bottom) {
+        document.documentElement.style.setProperty('--safe-area-bottom', `${safeArea.bottom}px`);
+    }
+    if (safeArea.top) {
+        document.documentElement.style.setProperty('--safe-area-top', `${safeArea.top}px`);
+    }
+}
+
+// ============================================
+// Back Button Management
+// ============================================
+
+let backButtonHistory = [];
+const enableNativeBackButton = false;
+
+function setupBackButton() {
+    if (!tg || !tg.BackButton) return;
+    
+    const backButton = tg.BackButton;
+    
+    if (!enableNativeBackButton) {
+        backButton.hide();
+        return;
+    }
+    
+    // Show back button if there's history
+    backButton.show();
+    backButton.onClick(() => {
+        if (backButtonHistory.length > 0) {
+            const previousPage = backButtonHistory.pop();
+            navigateToPage(previousPage);
+        } else {
+            tg.close();
+        }
+    });
+}
+
+function showBackButton() {
+    if (!enableNativeBackButton) return;
+    if (tg && tg.BackButton) {
+        tg.BackButton.show();
+    }
+}
+
+function hideBackButton() {
+    if (!enableNativeBackButton) return;
+    if (tg && tg.BackButton) {
+        tg.BackButton.hide();
+    }
+}
+
+function addToHistory(page) {
+    backButtonHistory.push(page);
+    showBackButton();
+}
+
+// ============================================
+// User Data Management
+// ============================================
+
+function getUserData() {
+    if (!tg || !tg.initDataUnsafe) return null;
+    
+    const user = tg.initDataUnsafe.user;
+    if (!user) return null;
+    
+    return {
+        id: user.id,
+        firstName: user.first_name,
+        lastName: user.last_name,
+        username: user.username,
+        languageCode: user.language_code,
+        isPremium: user.is_premium || false,
+        photoUrl: user.photo_url
+    };
+}
+
+function getInitData() {
+    if (!tg) return null;
+    return tg.initData || null;
+}
+
+function getInitDataUnsafe() {
+    if (!tg) return null;
+    return tg.initDataUnsafe || {};
+}
+
+// ============================================
+// UI Event Handlers
+// ============================================
+
+// Close button handler
+// Menu button handler
+const menuBtn = document.querySelector('.menu-btn');
+if (menuBtn) {
+    menuBtn.addEventListener('click', () => {
+        hapticFeedback('impact');
+        if (tg && tg.showPopup) {
+            tg.showPopup({
+                title: 'Меню',
+                message: 'Выберите действие',
+                buttons: [
+                    { id: 'history', type: 'default', text: 'История просмотров' },
+                    { id: 'downloads', type: 'default', text: 'Скачанные видео' },
+                    { id: 'settings', type: 'default', text: 'Настройки' },
+                    { id: 'about', type: 'default', text: 'О приложении' }
+                ]
+            }, (buttonId) => {
+                handleMenuAction(buttonId);
+            });
+        }
+    });
+}
+
+function handleMenuAction(buttonId) {
+    hapticFeedback('notification');
+    
+    switch(buttonId) {
+        case 'history':
+            showHistoryPage();
+            break;
+        case 'downloads':
+            showDownloadsPage();
+            break;
+        case 'settings':
+            showSettingsPage();
+            break;
+        case 'about':
+            showAboutDialog();
+            break;
+    }
+}
+
+// Promo section click handler
+const promoContent = document.querySelector('.promo-content');
+if (promoContent) {
+    promoContent.addEventListener('click', () => {
+        hapticFeedback('impact');
+        trackUserAction('promo_clicked');
+        navigateToPage('видео');
+    });
+}
+
+// Grid item click handlers - инструменты
+document.querySelectorAll('.grid-item').forEach((item, index) => {
+    item.addEventListener('click', () => {
+        hapticFeedback('impact');
+        const externalUrl = item.dataset.url;
+        if (externalUrl) {
+            trackUserAction('category_external_opened', { url: externalUrl });
+            if (tg && typeof tg.openLink === 'function') {
+                tg.openLink(externalUrl);
+            } else {
+                window.open(externalUrl, '_blank', 'noopener,noreferrer');
+            }
+            return;
+        }
+
+        const categories = [
+            'ДРЕЛИ И ШУРУПОВЕРТЫ',
+            'БОЛГАРКИ (УШМ)',
+            'ЛОБЗИКИ',
+            'ШЛИФМАШИНЫ'
+        ];
+        
+        const categoryId = index + 1;
+        const categoryName = categories[index];
+        
+        trackUserAction('category_opened', { category: categoryName, categoryId });
+        addToHistory('home');
+        openCategory(categoryId, categoryName);
+    });
+});
+
+// Bottom navigation handlers
+document.querySelectorAll('.nav-item').forEach((item, index) => {
+    item.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        
+        hapticFeedback('impact');
+        
+        // Remove active class from all items
+        document.querySelectorAll('.nav-item').forEach(nav => {
+            nav.classList.remove('active');
+        });
+        
+        // Add active class to clicked item
+        item.classList.add('active');
+        
+        const navLabels = [
+            'Главная',
+            'Видео',
+            'Мои инструменты',
+            'Чат с поддержкой',
+            'Где купить?'
+        ];
+        
+        trackUserAction('navigation', { page: navLabels[index] });
+        
+        // Explicit handling for "Где купить?" button
+        if (item.dataset.action === 'where-buy' || index === 4 || navLabels[index] === 'Где купить?') {
+            console.log('Кнопка "Где купить?" нажата');
+            setActiveNavIndex(4);
+            showWhereToBuy();
+        } else {
+            navigateToPage(navLabels[index].toLowerCase());
+        }
+    });
+});
+
+// Dedicated handler to ensure "Где купить?" always opens (even if index order changes)
+const whereBuyNav = document.getElementById('nav-where-buy');
+if (whereBuyNav) {
+    whereBuyNav.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        hapticFeedback('impact');
+        setActiveNavIndex(4);
+        showWhereToBuy();
+    });
+    whereBuyNav.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            whereBuyNav.click();
+        }
+    });
+}
+
+// Dedicated handler for "Мои инструменты" button
+const myToolsNav = document.getElementById('nav-my-tools');
+if (myToolsNav) {
+    myToolsNav.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        hapticFeedback('impact');
+        setActiveNavIndex(2);
+        showMyToolsPage();
+    });
+}
+
+// Catalog links handler (opens through Telegram API)
+document.addEventListener('click', (e) => {
+    const catalogLink = e.target.closest('.catalog-link');
+    if (catalogLink) {
+        e.preventDefault();
+        e.stopPropagation();
+        hapticFeedback('impact');
+        const url = catalogLink.getAttribute('data-url') || catalogLink.getAttribute('href');
+        if (url) {
+            trackUserAction('catalog_link_clicked', { url });
+            if (tg && typeof tg.openLink === 'function') {
+                tg.openLink(url);
+            } else {
+                window.open(url, '_blank', 'noopener,noreferrer');
+            }
+        }
+    }
+});
+
+// Search functionality for tools page
+const toolsSearchInput = document.getElementById('tools-search-input');
+if (toolsSearchInput) {
+    let searchTimeout;
+    
+    toolsSearchInput.addEventListener('input', (e) => {
+        clearTimeout(searchTimeout);
+        const query = e.target.value.trim();
+        
+        if (query.length > 0) {
+            searchTimeout = setTimeout(() => {
+                trackUserAction('search', { query: query, page: 'tools' });
+                // Здесь можно добавить поиск по инструментам, если нужно
+            }, 300);
+        }
+    });
+}
+
+// Search functionality for videos page
+const videosSearchInput = document.getElementById('videos-search-input');
+if (videosSearchInput) {
+    let searchTimeout;
+    
+    videosSearchInput.addEventListener('input', (e) => {
+        clearTimeout(searchTimeout);
+        const query = e.target.value.trim();
+        
+        if (query.length > 0) {
+            searchTimeout = setTimeout(() => {
+                trackUserAction('search', { query: query, page: 'videos' });
+                performSearch(query);
+            }, 300);
+        } else {
+            clearSearchResults();
+        }
+    });
+    
+    // Также обрабатываем очистку при фокусе/потере фокуса
+    videosSearchInput.addEventListener('focus', () => {
+        const query = videosSearchInput.value.trim();
+        if (query.length > 0) {
+            performSearch(query);
+        }
+    });
+}
+
+const toolsBackBtn = document.getElementById('tools-back');
+if (toolsBackBtn) {
+    toolsBackBtn.addEventListener('click', () => {
+        showHomePage();
+    });
+}
+
+const catalogBackBtn = document.getElementById('catalog-back');
+if (catalogBackBtn) {
+    catalogBackBtn.addEventListener('click', () => {
+        showHomePage();
+    });
+}
+
+const refreshPurchasesBtn = document.getElementById('refresh-purchases');
+if (refreshPurchasesBtn) {
+    // Убеждаемся, что кнопка кликабельна
+    refreshPurchasesBtn.style.pointerEvents = 'auto';
+    refreshPurchasesBtn.style.cursor = 'pointer';
+    refreshPurchasesBtn.disabled = false;
+    
+    refreshPurchasesBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        refreshPurchasedTools();
+    });
+    
+    // Также добавляем обработчик для touch событий
+    refreshPurchasesBtn.addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        refreshPurchasedTools();
+    });
+}
+
+// Дополнительная проверка для кнопки "Где купить?"
+document.addEventListener('DOMContentLoaded', () => {
+    const navItems = document.querySelectorAll('.nav-item');
+    navItems.forEach((item, index) => {
+        const span = item.querySelector('span');
+        if (span && span.textContent.trim() === 'Где купить?') {
+            // Убеждаемся, что кнопка кликабельна
+            item.style.cursor = 'pointer';
+            item.style.pointerEvents = 'auto';
+            item.setAttribute('role', 'button');
+            item.setAttribute('tabindex', '0');
+            
+            // Добавляем обработчик для клавиатуры (для доступности)
+            item.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    item.click();
+                }
+            });
+            
+            console.log('Кнопка "Где купить?" найдена и настроена');
+        }
+    });
+});
+
+// Where to buy modal handlers
+const whereBuyModal = document.getElementById('where-buy-modal');
+if (whereBuyModal) {
+    const closeBtn = whereBuyModal.querySelector('.modal-close');
+    if (closeBtn) {
+        closeBtn.addEventListener('click', closeWhereBuyModal);
+    }
+
+    whereBuyModal.querySelectorAll('.modal-link').forEach((link) => {
+        link.addEventListener('click', () => {
+            const phone = link.getAttribute('href');
+            if (!phone) return;
+            openPhoneDialer(phone);
+        });
+    });
+
+    whereBuyModal.addEventListener('click', (e) => {
+        if (e.target === whereBuyModal) {
+            closeWhereBuyModal();
+        }
+    });
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            closeWhereBuyModal();
+        }
+    });
+}
+
+const drillCatalogModal = document.getElementById('drill-catalog-modal');
+if (drillCatalogModal) {
+    const closeBtn = drillCatalogModal.querySelector('.modal-close');
+    if (closeBtn) {
+        closeBtn.addEventListener('click', closeDrillCatalogModal);
+    }
+    drillCatalogModal.addEventListener('click', (e) => {
+        if (e.target === drillCatalogModal) {
+            closeDrillCatalogModal();
+        }
+    });
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            closeDrillCatalogModal();
+        }
+    });
+}
+
+// ============================================
+// Navigation Functions
+// ============================================
+
+function navigateToPage(page) {
+    console.log('Navigating to:', page);
+    
+    switch(page) {
+        case 'home':
+        case 'главная':
+            showHomePage();
+            break;
+        case 'видео':
+            showVideosPage();
+            break;
+        case 'мои инструменты':
+            showMyToolsPage();
+            break;
+        case 'чат с поддержкой':
+            showSupportChat();
+            break;
+        case 'где купить?':
+        case 'где купить':
+            console.log('Calling showWhereToBuy()');
+            showWhereToBuy();
+            break;
+        default:
+            console.warn('Unknown page:', page);
+    }
+}
+
+function setActiveNavIndex(activeIndex) {
+    const items = document.querySelectorAll('.nav-item');
+    items.forEach((nav, i) => {
+        nav.classList.toggle('active', i === activeIndex);
+    });
+}
+
+function setHeader(title, subtitle) {
+    const titleEl = document.querySelector('.header-title h1');
+    const subtitleEl = document.querySelector('.header-title .subtitle');
+    if (titleEl) titleEl.textContent = title;
+    if (subtitleEl) subtitleEl.textContent = subtitle;
+}
+
+function showHomePage() {
+    hideBackButton();
+    setHeader('Электроинструменты', '');
+    setActiveNavIndex(0);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    toggleCatalogPage(false);
+    toggleToolsPage(false);
+    toggleMyToolsPage(false);
+    toggleVideosPage(false);
+}
+
+function showVideosPage() {
+    addToHistory('home');
+    setHeader('Видеоинтрукции', '');
+    setActiveNavIndex(1);
+    toggleCatalogPage(false);
+    toggleToolsPage(false);
+    toggleMyToolsPage(false);
+    toggleVideosPage(true);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function showSupportChat() {
+    addToHistory('home');
+    hapticFeedback('impact');
+    toggleCatalogPage(false);
+    toggleToolsPage(false);
+    toggleMyToolsPage(false);
+    toggleVideosPage(false);
+    
+    if (tg && tg.openTelegramLink) {
+        // Открыть чат с поддержкой через Telegram
+        tg.openTelegramLink('https://t.me/georgyitikhonov');
+    } else if (tg && tg.openLink) {
+        // Альтернативный способ открытия ссылки
+        tg.openLink('https://t.me/georgyitikhonov');
+    } else {
+        // Fallback для тестирования вне Telegram
+        window.open('https://t.me/georgyitikhonov', '_blank');
+        if (tg && tg.showAlert) {
+            tg.showAlert('Чат с поддержкой\n\nНажмите на ссылку для связи с поддержкой:\n\n💬 @georgyitikhonov');
+        }
+    }
+}
+
+function toggleToolsPage(isVisible) {
+    const toolsPage = document.getElementById('tools-page');
+    const mainContent = document.querySelector('.main-content');
+    if (!toolsPage || !mainContent) return;
+    toolsPage.classList.toggle('active', isVisible);
+    const sections = Array.from(mainContent.children).filter((child) => child.id !== 'tools-page');
+    sections.forEach((section) => {
+        section.style.display = isVisible ? 'none' : '';
+    });
+}
+
+function showCatalogPage() {
+    setHeader('Каталог: Дрели и шуруповерты', '');
+    setActiveNavIndex(0);
+    toggleCatalogPage(true);
+    toggleMyToolsPage(false);
+    toggleToolsPage(false);
+    toggleVideosPage(false);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function toggleCatalogPage(isVisible) {
+    const catalogPage = document.getElementById('catalog-page');
+    const mainContent = document.querySelector('.main-content');
+    if (!catalogPage || !mainContent) return;
+    catalogPage.classList.toggle('active', isVisible);
+    
+    // Скрываем/показываем другие секции
+    const contentGrid = mainContent.querySelector('.content-grid');
+    if (contentGrid) {
+        contentGrid.style.display = isVisible ? 'none' : '';
+    }
+    
+    const sections = Array.from(mainContent.children).filter((child) => 
+        child.id !== 'catalog-page' && 
+        child.id !== 'tools-page' && 
+        child.id !== 'my-tools-page' && 
+        child.id !== 'videos-page' &&
+        !child.classList.contains('content-grid')
+    );
+    sections.forEach((section) => {
+        section.style.display = isVisible ? 'none' : '';
+    });
+}
+
+function showToolsPage() {
+    setHeader('Дрели и шуруповерты', 'каталог и инструкции');
+    setActiveNavIndex(2);
+    toggleCatalogPage(false);
+    toggleMyToolsPage(false);
+    toggleToolsPage(true);
+    toggleVideosPage(false);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function showMyToolsPage() {
+    setHeader('Мои инструменты', 'купленные инструменты');
+    setActiveNavIndex(2);
+    toggleCatalogPage(false);
+    toggleMyToolsPage(true);
+    toggleToolsPage(false);
+    toggleVideosPage(false);
+    renderPurchasedTools();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function toggleMyToolsPage(isVisible) {
+    const myToolsPage = document.getElementById('my-tools-page');
+    const mainContent = document.querySelector('.main-content');
+    if (!myToolsPage || !mainContent) return;
+    myToolsPage.classList.toggle('active', isVisible);
+    
+    // Скрываем/показываем другие секции
+    const contentGrid = mainContent.querySelector('.content-grid');
+    if (contentGrid) {
+        contentGrid.style.display = isVisible ? 'none' : '';
+    }
+    
+    const sections = Array.from(mainContent.children).filter((child) => 
+        child.id !== 'my-tools-page' && 
+        child.id !== 'catalog-page' &&
+        child.id !== 'tools-page' && 
+        child.id !== 'videos-page' &&
+        !child.classList.contains('content-grid')
+    );
+    sections.forEach((section) => {
+        section.style.display = isVisible ? 'none' : '';
+    });
+    
+    // Явно скрываем каталог, если показываем "Мои инструменты"
+    if (isVisible) {
+        const catalogPage = document.getElementById('catalog-page');
+        if (catalogPage) {
+            catalogPage.classList.remove('active');
+        }
+    }
+}
+
+function toggleVideosPage(isVisible) {
+    const videosPage = document.getElementById('videos-page');
+    const mainContent = document.querySelector('.main-content');
+    if (!videosPage || !mainContent) return;
+    videosPage.classList.toggle('active', isVisible);
+    const sections = Array.from(mainContent.children).filter((child) => child.id !== 'videos-page');
+    sections.forEach((section) => {
+        section.style.display = isVisible ? 'none' : '';
+    });
+}
+
+function openWhereBuyModal() {
+    const modal = document.getElementById('where-buy-modal');
+    if (!modal) return false;
+    modal.classList.add('open');
+    modal.setAttribute('aria-hidden', 'false');
+    return true;
+}
+
+function closeWhereBuyModal() {
+    const modal = document.getElementById('where-buy-modal');
+    if (!modal) return;
+    modal.classList.remove('open');
+    modal.setAttribute('aria-hidden', 'true');
+}
+
+function openDrillCatalogModal() {
+    const modal = document.getElementById('drill-catalog-modal');
+    if (!modal) return false;
+    modal.classList.add('open');
+    modal.setAttribute('aria-hidden', 'false');
+    return true;
+}
+
+function closeDrillCatalogModal() {
+    const modal = document.getElementById('drill-catalog-modal');
+    if (!modal) return;
+    modal.classList.remove('open');
+    modal.setAttribute('aria-hidden', 'true');
+}
+
+function showWhereToBuy() {
+    console.log('showWhereToBuy called', { tg: !!tg, hasShowPopup: !!(tg && tg.showPopup) });
+    
+    try {
+        addToHistory('home');
+    } catch(e) {
+        console.warn('addToHistory error:', e);
+    }
+    
+    try {
+        hapticFeedback('impact');
+    } catch(e) {
+        console.warn('hapticFeedback error:', e);
+    }
+
+    if (openWhereBuyModal()) {
+        return;
+    }
+    
+    const shopUrl = 'https://теплыйдом38.рф/братск/?ysclid=mki3mdiiw2874168637';
+    const message = '🏪 Наши магазины:\n\n📍 г. Братск, Южная, 14Б, строение 1\n📞 +7 (924) 700-09-52\n\n📍 г. Братск, Индустриальный проезд, 11\n📞 +7 (924) 700-09-52\n\n📍 г. Усть-Илимск, проспект Мира, 41\n📞 +7 (924) 717-75-69\n\n📍 г. Нижнеудинск, Масловского, 43\n📞 +7 (924) 700-10-58\n\n🌐 Онлайн магазин';
+    
+    // Попытка использовать showPopup (Telegram WebApp API)
+    if (tg && typeof tg.showPopup === 'function') {
+        try {
+            tg.showPopup({
+                title: 'Где купить?',
+                message: message,
+                buttons: [
+                    { id: 'open_shop', type: 'default', text: '🌐 Открыть магазин' },
+                    { id: 'call_bratsk1', type: 'default', text: '📞 Братск (Южная)' },
+                    { id: 'call_bratsk2', type: 'default', text: '📞 Братск (Индустр.)' },
+                    { id: 'call_ust_ilimsk', type: 'default', text: '📞 Усть-Илимск' },
+                    { id: 'call_nizhneudinsk', type: 'default', text: '📞 Нижнеудинск' }
+                ]
+            }, (buttonId) => {
+                console.log('Popup button clicked:', buttonId);
+                if (!buttonId || buttonId === 'cancel') return;
+                
+                if (buttonId === 'open_shop') {
+                    if (tg && typeof tg.openLink === 'function') {
+                        tg.openLink(shopUrl);
+                    } else {
+                        window.open(shopUrl, '_blank');
+                    }
+                } else if (buttonId === 'call_bratsk1') {
+                    openPhoneDialer('tel:+79247000952');
+                } else if (buttonId === 'call_bratsk2') {
+                    openPhoneDialer('tel:+79247000952');
+                } else if (buttonId === 'call_ust_ilimsk') {
+                    openPhoneDialer('tel:+79247177569');
+                } else if (buttonId === 'call_nizhneudinsk') {
+                    openPhoneDialer('tel:+79247001058');
+                }
+            });
+            return;
+        } catch (e) {
+            console.error('showPopup failed:', e);
+        }
+    }
+    
+    // Fallback 1: используем showAlert с callback
+    if (tg && typeof tg.showAlert === 'function') {
+        const alertMessage = 'Где купить?\n\n' + message + '\n\n🌐 Онлайн: ' + shopUrl;
+        tg.showAlert(alertMessage, () => {
+            // После закрытия alert предлагаем открыть магазин
+            if (tg && typeof tg.showConfirm === 'function') {
+                tg.showConfirm('Открыть онлайн магазин?', (confirmed) => {
+                    if (confirmed) {
+                        if (tg && typeof tg.openLink === 'function') {
+                            tg.openLink(shopUrl);
+                        } else {
+                            window.open(shopUrl, '_blank');
+                        }
+                    }
+                });
+            } else {
+                // Если showConfirm недоступен, просто открываем
+                if (tg && typeof tg.openLink === 'function') {
+                    tg.openLink(shopUrl);
+                } else {
+                    window.open(shopUrl, '_blank');
+                }
+            }
+        });
+        return;
+    }
+    
+    // Fallback 2: для тестирования вне Telegram
+    const fullMessage = 'Где купить?\n\n' + message + '\n\n🌐 Онлайн: ' + shopUrl + '\n\nОткрыть магазин?';
+    const openShop = confirm(fullMessage);
+    if (openShop) {
+        window.open(shopUrl, '_blank');
+    }
+}
+
+function showHistoryPage() {
+    addToHistory('home');
+    if (tg && tg.showAlert) {
+        tg.showAlert('История просмотров');
+    }
+}
+
+function openPhoneDialer(phone) {
+    if (!phone) return;
+    const normalizedPhone = phone.startsWith('tel:') ? phone : `tel:${phone}`;
+    const rawPhone = normalizedPhone.replace(/^tel:/, '');
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+
+    if (tg && typeof tg.openLink === 'function') {
+        try {
+            tg.openLink(normalizedPhone, { try_instant_view: false });
+        } catch (e) {
+            console.warn('tg.openLink failed:', e);
+        }
+    }
+
+    if (isIOS) {
+        const telPrompt = `telprompt:${rawPhone}`;
+        try {
+            window.location.href = telPrompt;
+        } catch (e) {
+            console.warn('telprompt failed:', e);
+        }
+        setTimeout(() => {
+            window.location.href = normalizedPhone;
+        }, 200);
+        return;
+    }
+
+    const tempLink = document.createElement('a');
+    tempLink.href = normalizedPhone;
+    tempLink.style.display = 'none';
+    document.body.appendChild(tempLink);
+    tempLink.click();
+    tempLink.remove();
+    try {
+        window.open(normalizedPhone, '_self');
+    } catch (e) {
+        console.warn('window.open failed:', e);
+    }
+    window.location.href = normalizedPhone;
+    document.location = normalizedPhone;
+}
+
+function showDownloadsPage() {
+    addToHistory('home');
+    if (tg && tg.showAlert) {
+        tg.showAlert('Скачанные видео');
+    }
+}
+
+function showSettingsPage() {
+    addToHistory('home');
+    if (tg && tg.showAlert) {
+        tg.showAlert('Настройки приложения');
+    }
+}
+
+function showAboutDialog() {
+    if (tg && tg.showAlert) {
+        tg.showAlert('Видеоинструкции по электроинструменту\n\nВерсия 1.0\n\nОбучающие видео по работе с электроинструментом');
+    }
+}
+
+function openCategory(categoryId, categoryName) {
+    if (categoryId === 1) {
+        showCatalogPage();
+        return;
+    }
+    if (tg && tg.showAlert) {
+        tg.showAlert(`Открыть категорию: ${categoryName}`);
+    }
+}
+
+// ============================================
+// Search Functions
+// ============================================
+
+function performSearch(query) {
+    if (!query || query.trim().length === 0) {
+        clearSearchResults();
+        return;
+    }
+    
+    const searchQuery = query.toLowerCase().trim();
+    const videoGrid = document.querySelector('#videos-section .video-grid');
+    const videoCards = document.querySelectorAll('#videos-section .video-card');
+    
+    if (!videoGrid || !videoCards.length) {
+        console.warn('Video grid or cards not found');
+        return;
+    }
+    
+    let visibleCount = 0;
+    
+    videoCards.forEach(card => {
+        const titleElement = card.querySelector('.video-meta h3');
+        const descriptionElement = card.querySelector('.video-meta p');
+        
+        if (!titleElement) return;
+        
+        const title = titleElement.textContent.toLowerCase();
+        const description = descriptionElement ? descriptionElement.textContent.toLowerCase() : '';
+        
+        // Поиск по ключевым словам в названии или описании
+        const searchWords = searchQuery.split(/\s+/).filter(word => word.length > 0);
+        const matchesTitle = searchWords.some(word => title.includes(word));
+        const matchesDescription = searchWords.some(word => description.includes(word));
+        const matchesFullTitle = title.includes(searchQuery);
+        
+        // Показываем видео, если найдено совпадение в названии, описании или полном названии
+        if (matchesTitle || matchesDescription || matchesFullTitle) {
+            card.style.display = '';
+            visibleCount++;
+        } else {
+            card.style.display = 'none';
+        }
+    });
+    
+    // Показываем сообщение, если ничего не найдено
+    const videosSection = document.getElementById('videos-section');
+    let noResultsMessage = videosSection.querySelector('.no-results-message');
+    
+    if (visibleCount === 0) {
+        if (!noResultsMessage) {
+            noResultsMessage = document.createElement('div');
+            noResultsMessage.className = 'no-results-message';
+            noResultsMessage.style.cssText = 'text-align: center; padding: 40px 20px; color: var(--text-secondary);';
+            noResultsMessage.innerHTML = `
+                <svg width="64" height="64" viewBox="0 0 24 24" fill="none" style="margin-bottom: 16px; opacity: 0.5;">
+                    <circle cx="11" cy="11" r="8" stroke="currentColor" stroke-width="2"/>
+                    <path d="m21 21-4.35-4.35" stroke="currentColor" stroke-width="2"/>
+                </svg>
+                <h3 style="font-size: 16px; font-weight: 700; color: var(--text-primary); margin-bottom: 8px;">Ничего не найдено</h3>
+                <p style="font-size: 14px; color: var(--text-secondary);">Попробуйте изменить запрос или использовать другие ключевые слова</p>
+            `;
+            videoGrid.parentNode.insertBefore(noResultsMessage, videoGrid.nextSibling);
+        }
+        noResultsMessage.style.display = 'block';
+    } else {
+        if (noResultsMessage) {
+            noResultsMessage.style.display = 'none';
+        }
+    }
+    
+    console.log(`Search completed: ${visibleCount} videos found for "${query}"`);
+}
+
+function clearSearchResults() {
+    const videoCards = document.querySelectorAll('#videos-section .video-card');
+    const noResultsMessage = document.querySelector('#videos-section .no-results-message');
+    
+    // Показываем все видео
+    videoCards.forEach(card => {
+        card.style.display = '';
+    });
+    
+    // Скрываем сообщение "Ничего не найдено"
+    if (noResultsMessage) {
+        noResultsMessage.style.display = 'none';
+    }
+    
+    console.log('Search cleared - all videos shown');
+}
+
+// ============================================
+// Video Functions
+// ============================================
+
+// External video opening (YouTube searches)
+document.querySelectorAll('.video-open').forEach((btn) => {
+    btn.addEventListener('click', () => {
+        const url = btn.getAttribute('data-url');
+        if (!url) return;
+        hapticFeedback('impact');
+        trackUserAction('video_external_opened', { url });
+        if (tg && typeof tg.openLink === 'function') {
+            tg.openLink(url);
+        } else {
+            window.open(url, '_blank', 'noopener,noreferrer');
+        }
+    });
+});
+
+function openVideo(videoId, title) {
+    hapticFeedback('notification');
+    trackUserAction('video_opened', { videoId, title });
+    
+    // Here you can implement video player
+    if (tg && tg.showAlert) {
+        tg.showAlert(`Открыть видео: ${title}`);
+    }
+}
+
+function addToFavorites(videoId) {
+    hapticFeedback('notification');
+    trackUserAction('video_favorited', { videoId });
+    
+    if (tg && tg.showAlert) {
+        tg.showAlert('Добавлено в избранное');
+    }
+}
+
+function shareVideo(videoId, title) {
+    hapticFeedback('impact');
+    trackUserAction('video_shared', { videoId, title });
+    
+    if (tg && tg.shareUrl) {
+        tg.shareUrl(`https://example.com/video/${videoId}`, title);
+    } else if (tg && tg.showAlert) {
+        tg.showAlert('Поделиться видео: ' + title);
+    }
+}
+
+// ============================================
+// Haptic Feedback
+// ============================================
+
+function hapticFeedback(type = 'impact') {
+    if (!tg || !tg.HapticFeedback) return;
+    
+    try {
+        if (type === 'impact') {
+            tg.HapticFeedback.impactOccurred('medium');
+        } else if (type === 'notification') {
+            tg.HapticFeedback.notificationOccurred('success');
+        } else if (type === 'selection') {
+            tg.HapticFeedback.selectionChanged();
+        }
+    } catch (e) {
+        console.warn('Haptic feedback error:', e);
+    }
+}
+
+// Add haptic feedback to interactive elements (excluding nav-items to avoid conflicts)
+document.querySelectorAll('button:not(.nav-item), .grid-item').forEach(element => {
+    element.addEventListener('touchstart', () => {
+        hapticFeedback('impact');
+    });
+    
+    element.addEventListener('click', () => {
+        hapticFeedback('selection');
+    });
+});
+
+// ============================================
+// Data Communication with Bot
+// ============================================
+
+function sendDataToBot(data) {
+    if (!tg || !tg.sendData) {
+        console.warn('sendData not available');
+        return false;
+    }
+    
+    try {
+        tg.sendData(JSON.stringify(data));
+        return true;
+    } catch (e) {
+        console.error('Error sending data to bot:', e);
+        return false;
+    }
+}
+
+// ============================================
+// Analytics & Tracking
+// ============================================
+
+function trackUserAction(action, data = {}) {
+    const trackingData = {
+        action: action,
+        timestamp: Date.now(),
+        platform: tg?.platform || 'unknown',
+        version: tg?.version || 'unknown',
+        ...data
+    };
+    
+    // Get user ID if available
+    const userData = getUserData();
+    if (userData) {
+        trackingData.userId = userData.id;
+    }
+    
+    console.log('Tracking:', trackingData);
+    
+    // Send to bot if needed
+    // sendDataToBot({ type: 'analytics', data: trackingData });
+}
+
+// ============================================
+// Purchased Tools Management
+// ============================================
+
+const PURCHASED_TOOLS_KEY = 'purchased_tools';
+const LAST_SYNC_KEY = 'last_sync_timestamp';
+
+// Конфигурация API для получения данных о покупках с сайта
+// ВАЖНО: НЕ храните токен бота в клиентском коде! Это небезопасно.
+// Токен бота должен использоваться только на серверной стороне.
+
+// Вариант 1: Использование через Telegram WebApp API (рекомендуется)
+// Приложение отправляет данные боту через tg.sendData(), бот обрабатывает и возвращает данные
+// Токен бота должен использоваться только на сервере!
+
+// Вариант 2: Использование внешнего API (если есть серверный endpoint)
+const PURCHASES_API_URL = 'https://your-api-domain.com/api/purchases'; // Замените на ваш URL
+const USE_API_SYNC = false; // Установите true для использования API, false для синхронизации через бота
+
+/*
+ * ИНСТРУКЦИЯ ПО НАСТРОЙКЕ ИНТЕГРАЦИИ С БОТОМ:
+ * 
+ * ВАЖНО: Токен бота 
+ * НЕ ДОЛЖЕН быть в клиентском коде! Используйте его только на сервере.
+ * 
+ * ВАРИАНТ 1: Через Telegram WebApp API (рекомендуется, уже реализовано)
+ * 
+ * 1. В вашем боте обработайте запросы через tg.sendData():
+ *    - Тип запроса: 'get_purchases' или 'sync_purchases'
+ *    - userId: получается из initDataUnsafe.user.id
+ * 
+ * 2. Бот должен вернуть данные через MainButton или другой механизм:
+ *    - Вызовите window.receivePurchasesFromBot([...массив покупок...])
+ * 
+ * Пример обработки в боте (Python):
+ * 
+ * @bot.message_handler(commands=['start'])
+ * def handle_start(message):
+ *     # Обработка WebApp данных
+ *     pass
+ * 
+ * def handle_web_app_data(data):
+ *     data = json.loads(data)
+ *     if data.get('type') == 'get_purchases':
+ *         user_id = data.get('userId')
+ *         purchases = get_user_purchases(user_id)  # Ваша функция получения покупок
+ *         # Отправьте данные обратно через MainButton или другой способ
+ * 
+ * ВАРИАНТ 2: Через внешний API (если есть сервер)
+ * 
+ * 1. Создайте серверный endpoint, который использует токен бота
+ * 2. Укажите URL в PURCHASES_API_URL
+ * 3. Установите USE_API_SYNC = true
+ * 
+ * Формат API endpoint:
+ * GET /api/purchases?userId={telegramUserId}&lastSync={timestamp}
+ * 
+ * Формат ответа от API (JSON):
+ * {
+ *   "success": true,
+ *   "purchases": [
+ *     {
+ *       "id": "tool_123",
+ *       "toolName": "APEXWOLT 48В",
+ *       "toolImage": "https://storage.yandexcloud.net/miniappp/assets/drill.webp",
+ *       "purchaseDate": 1704067200000,
+ *       "category": "Дрели и шуруповерты",
+ *       "model": "APEXWOLT 48В",
+ *       "serialNumber": "SN123456"
+ *     }
+ *   ]
+ * }
+ */
+
+// Структура данных о покупке:
+// {
+//   id: string (уникальный ID покупки),
+//   toolName: string (название инструмента),
+//   toolImage: string (URL изображения),
+//   purchaseDate: number (timestamp),
+//   category: string (категория инструмента),
+//   model: string (модель, опционально),
+//   serialNumber: string (серийный номер, опционально)
+// }
+
+function getPurchasedTools() {
+    try {
+        const stored = localStorage.getItem(PURCHASED_TOOLS_KEY);
+        if (!stored) return [];
+        const tools = JSON.parse(stored);
+        // Сортируем по дате покупки (новые сначала)
+        return tools.sort((a, b) => b.purchaseDate - a.purchaseDate);
+    } catch (e) {
+        console.error('Error loading purchased tools:', e);
+        return [];
+    }
+}
+
+function savePurchasedTools(tools) {
+    try {
+        localStorage.setItem(PURCHASED_TOOLS_KEY, JSON.stringify(tools));
+        return true;
+    } catch (e) {
+        console.error('Error saving purchased tools:', e);
+        return false;
+    }
+}
+
+function addPurchasedTool(toolData) {
+    const tools = getPurchasedTools();
+    // Проверяем, нет ли уже такого инструмента (по ID или по комбинации названия и даты)
+    const existingIndex = tools.findIndex(t => 
+        t.id === toolData.id || 
+        (t.toolName === toolData.toolName && 
+         Math.abs(t.purchaseDate - toolData.purchaseDate) < 86400000) // в пределах дня
+    );
+    
+    if (existingIndex >= 0) {
+        // Обновляем существующий
+        tools[existingIndex] = { ...tools[existingIndex], ...toolData };
+    } else {
+        // Добавляем новый
+        if (!toolData.id) {
+            toolData.id = `tool_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+        }
+        if (!toolData.purchaseDate) {
+            toolData.purchaseDate = Date.now();
+        }
+        tools.push(toolData);
+    }
+    
+    savePurchasedTools(tools);
+    return tools;
+}
+
+function syncPurchasedToolsWithBot() {
+    return new Promise((resolve, reject) => {
+        const userData = getUserData();
+        if (!userData || !userData.id) {
+            reject(new Error('User data not available'));
+            return;
+        }
+        
+        const tools = getPurchasedTools();
+        const lastSync = localStorage.getItem(LAST_SYNC_KEY);
+        
+        // Отправляем запрос на синхронизацию боту
+        const syncData = {
+            type: 'sync_purchases',
+            userId: userData.id,
+            tools: tools,
+            lastSync: lastSync ? parseInt(lastSync) : null
+        };
+        
+        if (sendDataToBot(syncData)) {
+            // Сохраняем время последней синхронизации
+            localStorage.setItem(LAST_SYNC_KEY, Date.now().toString());
+            
+            // В реальном приложении бот должен вернуть обновленный список через MainButton или другой механизм
+            // Здесь мы просто отмечаем, что синхронизация начата
+            resolve(tools);
+        } else {
+            reject(new Error('Failed to send sync request'));
+        }
+    });
+}
+
+function requestPurchasesFromBot() {
+    return new Promise((resolve, reject) => {
+        const userData = getUserData();
+        if (!userData || !userData.id) {
+            reject(new Error('User data not available'));
+            return;
+        }
+        
+        const requestData = {
+            type: 'get_purchases',
+            userId: userData.id
+        };
+        
+        if (sendDataToBot(requestData)) {
+            // Бот должен вернуть данные через callback или MainButton
+            resolve(true);
+        } else {
+            reject(new Error('Failed to request purchases'));
+        }
+    });
+}
+
+function updatePurchasedToolsFromBot(botTools) {
+    if (!Array.isArray(botTools)) {
+        console.warn('Invalid tools data from bot');
+        return;
+    }
+    
+    const currentTools = getPurchasedTools();
+    const mergedTools = [...currentTools];
+    
+    // Объединяем данные: добавляем новые из бота, обновляем существующие
+    botTools.forEach(botTool => {
+        const existingIndex = mergedTools.findIndex(t => t.id === botTool.id);
+        if (existingIndex >= 0) {
+            // Обновляем существующий
+            mergedTools[existingIndex] = { ...mergedTools[existingIndex], ...botTool };
+        } else {
+            // Добавляем новый
+            if (!botTool.purchaseDate) {
+                botTool.purchaseDate = Date.now();
+            }
+            mergedTools.push(botTool);
+        }
+    });
+    
+    savePurchasedTools(mergedTools);
+    return mergedTools;
+}
+
+function formatPurchaseDate(timestamp) {
+    const date = new Date(timestamp);
+    const now = new Date();
+    const diffTime = Math.abs(now - date);
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    
+    if (diffDays === 1) {
+        return 'Сегодня';
+    } else if (diffDays === 2) {
+        return 'Вчера';
+    } else if (diffDays <= 7) {
+        return `${diffDays - 1} дней назад`;
+    } else {
+        return date.toLocaleDateString('ru-RU', {
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric'
+        });
+    }
+}
+
+function renderPurchasedTools() {
+    const tools = getPurchasedTools();
+    const listContainer = document.getElementById('my-tools-list');
+    const emptyState = document.getElementById('my-tools-empty');
+    
+    if (!listContainer || !emptyState) return;
+    
+    if (tools.length === 0) {
+        listContainer.style.display = 'none';
+        emptyState.style.display = 'flex';
+        return;
+    }
+    
+    listContainer.style.display = 'grid';
+    emptyState.style.display = 'none';
+    
+    listContainer.innerHTML = tools.map(tool => {
+        const purchaseDate = formatPurchaseDate(tool.purchaseDate);
+        const imageUrl = tool.toolImage || 'https://storage.yandexcloud.net/miniappp/assets/drill.webp';
+        
+        return `
+            <div class="my-tool-card">
+                <div class="my-tool-image">
+                    <img src="${imageUrl}" alt="${tool.toolName}" onerror="this.src='https://storage.yandexcloud.net/miniappp/assets/drill.webp'">
+                </div>
+                <div class="my-tool-info">
+                    <div class="my-tool-name">${tool.toolName}</div>
+                    ${tool.model ? `<div class="my-tool-model" style="font-size: 13px; color: var(--text-secondary);">${tool.model}</div>` : ''}
+                    <div class="my-tool-date">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+                            <rect x="3" y="4" width="18" height="18" rx="2" stroke="currentColor" stroke-width="2"/>
+                            <path d="M16 2v4M8 2v4M3 10h18" stroke="currentColor" stroke-width="2"/>
+                        </svg>
+                        Куплено: ${purchaseDate}
+                    </div>
+                    ${tool.category ? `<div style="font-size: 12px; color: var(--text-secondary); margin-top: 4px;">${tool.category}</div>` : ''}
+                    <div class="my-tool-actions">
+                        <button class="my-tool-action-btn primary" onclick="openToolInstructions('${tool.toolName}')">
+                            Инструкция
+                        </button>
+                        <button class="my-tool-action-btn secondary" onclick="viewToolDetails('${tool.id}')">
+                            Подробнее
+                        </button>
+                    </div>
+                </div>
+            </div>
+        `;
+    }).join('');
+}
+
+function openToolInstructions(toolName) {
+    hapticFeedback('impact');
+    trackUserAction('tool_instruction_opened', { toolName });
+    
+    // Ищем инструкцию для инструмента
+    if (toolName.toLowerCase().includes('дрель') || toolName.toLowerCase().includes('шуруповерт')) {
+        showToolsPage();
+    } else {
+        if (tg && tg.showAlert) {
+            tg.showAlert(`Инструкция для: ${toolName}\n\nИнструкции будут доступны в ближайшее время.`);
+        }
+    }
+}
+
+function viewToolDetails(toolId) {
+    hapticFeedback('impact');
+    const tools = getPurchasedTools();
+    const tool = tools.find(t => t.id === toolId);
+    
+    if (!tool) return;
+    
+    let details = `📦 ${tool.toolName}\n\n`;
+    if (tool.model) details += `Модель: ${tool.model}\n`;
+    if (tool.category) details += `Категория: ${tool.category}\n`;
+    if (tool.serialNumber) details += `Серийный номер: ${tool.serialNumber}\n`;
+    details += `Дата покупки: ${formatPurchaseDate(tool.purchaseDate)}`;
+    
+    if (tg && tg.showAlert) {
+        tg.showAlert(details);
+    }
+}
+
+// Получение данных о покупках через HTTP API с сайта
+async function fetchPurchasesFromAPI() {
+    const userData = getUserData();
+    if (!userData || !userData.id) {
+        throw new Error('User data not available');
+    }
+    
+    const lastSync = localStorage.getItem(LAST_SYNC_KEY);
+    
+    // Формируем запрос к API
+    const requestUrl = new URL(PURCHASES_API_URL);
+    requestUrl.searchParams.append('userId', userData.id);
+    if (lastSync) {
+        requestUrl.searchParams.append('lastSync', lastSync);
+    }
+    
+    try {
+        const headers = {
+            'Content-Type': 'application/json'
+        };
+        
+        // Добавляем данные Telegram для авторизации (если API требует)
+        if (tg && tg.initData) {
+            headers['X-Telegram-Init-Data'] = tg.initData;
+        }
+        
+        // Если нужна другая авторизация, раскомментируйте:
+        // headers['Authorization'] = `Bearer ${userToken}`;
+        
+        const response = await fetch(requestUrl.toString(), {
+            method: 'GET',
+            headers: headers
+        });
+        
+        if (!response.ok) {
+            throw new Error(`API error: ${response.status} ${response.statusText}`);
+        }
+        
+        const data = await response.json();
+        
+        // Ожидаемый формат ответа от API:
+        // {
+        //   success: true,
+        //   purchases: [
+        //     {
+        //       id: 'tool_123',
+        //       toolName: 'APEXWOLT 48В',
+        //       toolImage: 'https://...',
+        //       purchaseDate: 1704067200000,
+        //       category: 'Дрели и шуруповерты',
+        //       model: 'APEXWOLT 48В',
+        //       serialNumber: 'SN123456'
+        //     }
+        //   ]
+        // }
+        
+        if (data.success && Array.isArray(data.purchases)) {
+            const updatedTools = updatePurchasedToolsFromBot(data.purchases);
+            localStorage.setItem(LAST_SYNC_KEY, Date.now().toString());
+            return updatedTools;
+        } else {
+            throw new Error('Invalid API response format');
+        }
+    } catch (error) {
+        console.error('API fetch error:', error);
+        throw error;
+    }
+}
+
+async function refreshPurchasedTools() {
+    const refreshBtn = document.getElementById('refresh-purchases');
+    if (refreshBtn) {
+        refreshBtn.classList.add('loading');
+        refreshBtn.disabled = true;
+        refreshBtn.style.pointerEvents = 'none';
+    }
+    
+    try {
+        hapticFeedback('impact');
+        
+        let updatedTools = [];
+        
+        if (USE_API_SYNC && PURCHASES_API_URL && PURCHASES_API_URL !== 'https://your-api-domain.com/api/purchases') {
+            // Используем API для получения данных с сайта
+            try {
+                updatedTools = await fetchPurchasesFromAPI();
+                
+                if (tg && tg.showAlert) {
+                    tg.showAlert(`Список покупок обновлен!\n\nВсего инструментов: ${updatedTools.length}`);
+                }
+                
+                trackUserAction('purchases_refreshed_api', { count: updatedTools.length });
+            } catch (apiError) {
+                console.error('API sync failed, trying bot sync:', apiError);
+                // Fallback на синхронизацию через бота, если API недоступен
+                await requestPurchasesFromBot();
+                if (tg && tg.showAlert) {
+                    tg.showAlert('Запрос на обновление отправлен через бота. Данные будут обновлены автоматически.');
+                }
+                trackUserAction('purchases_refreshed_bot_fallback');
+            }
+        } else {
+            // Используем синхронизацию через бота
+            await requestPurchasesFromBot();
+            
+            if (tg && tg.showAlert) {
+                tg.showAlert('Запрос на обновление отправлен. Данные будут обновлены автоматически.');
+            }
+            
+            trackUserAction('purchases_refreshed_bot');
+        }
+        
+        // Обновляем отображение
+        renderPurchasedTools();
+        
+    } catch (e) {
+        console.error('Error refreshing purchases:', e);
+        if (tg && tg.showAlert) {
+            tg.showAlert('Ошибка при обновлении данных. Проверьте подключение к интернету и попробуйте позже.');
+        }
+        trackUserAction('purchases_refresh_error', { error: e.message });
+    } finally {
+        if (refreshBtn) {
+            refreshBtn.classList.remove('loading');
+            refreshBtn.disabled = false;
+            refreshBtn.style.pointerEvents = 'auto';
+            refreshBtn.style.cursor = 'pointer';
+        }
+    }
+}
+
+// Обработчик для получения данных от бота (вызывается ботом через MainButton или другой механизм)
+// Бот должен вызвать эту функцию после получения запроса на синхронизацию
+// Пример вызова из бота:
+//   window.receivePurchasesFromBot([
+//     {
+//       id: 'tool_123',
+//       toolName: 'APEXWOLT 48В',
+//       toolImage: 'https://storage.yandexcloud.net/miniappp/assets/drill.webp',
+//       purchaseDate: 1704067200000,
+//       category: 'Дрели и шуруповерты',
+//       model: 'APEXWOLT 48В',
+//       serialNumber: 'SN123456'
+//     }
+//   ]);
+window.receivePurchasesFromBot = function(botTools) {
+    try {
+        const updatedTools = updatePurchasedToolsFromBot(botTools);
+        renderPurchasedTools();
+        trackUserAction('purchases_synced', { count: updatedTools.length });
+        
+        if (tg && tg.showAlert) {
+            tg.showAlert(`Список покупок обновлен. Всего инструментов: ${updatedTools.length}`);
+        }
+    } catch (e) {
+        console.error('Error receiving purchases from bot:', e);
+    }
+};
+
+// Функция для тестирования (можно вызвать из консоли)
+// Пример: window.addTestPurchase({ toolName: 'Тестовый инструмент', category: 'Дрели' })
+window.addTestPurchase = function(toolData) {
+    const testTool = {
+        toolName: toolData.toolName || 'Тестовый инструмент',
+        toolImage: toolData.toolImage || 'https://storage.yandexcloud.net/miniappp/assets/drill.webp',
+        category: toolData.category || 'Дрели и шуруповерты',
+        model: toolData.model || '',
+        purchaseDate: toolData.purchaseDate || Date.now()
+    };
+    
+    addPurchasedTool(testTool);
+    renderPurchasedTools();
+    console.log('Test purchase added:', testTool);
+};
+
+// ============================================
+// App Initialization
+// ============================================
+
+function initApp() {
+    // Apply theme
+    applyTelegramTheme();
+    
+    // Handle viewport
+    handleViewportChange();
+    
+    // Get and log user data
+    const userData = getUserData();
+    if (userData) {
+        console.log('Telegram User:', userData);
+        trackUserAction('app_opened', { 
+            userId: userData.id,
+            username: userData.username,
+            isPremium: userData.isPremium
+        });
+    } else {
+        console.log('User data not available');
+        trackUserAction('app_opened');
+    }
+    
+    // Log platform info
+    console.log('Platform:', tg?.platform);
+    console.log('Version:', tg?.version);
+    console.log('Init Data:', getInitDataUnsafe());
+    
+    // Set initial back button state
+    hideBackButton();
+    
+    // Load and render purchased tools
+    renderPurchasedTools();
+    
+    // Try to sync purchases on startup (silently)
+    setTimeout(() => {
+        if (USE_API_SYNC && PURCHASES_API_URL && PURCHASES_API_URL !== 'https://your-api-domain.com/api/purchases') {
+            // Пытаемся синхронизировать через API
+            fetchPurchasesFromAPI()
+                .then(tools => {
+                    renderPurchasedTools();
+                    console.log('Purchases synced from API on startup:', tools.length);
+                })
+                .catch(() => {
+                    // Silently fail if API is not available
+                    console.log('API sync failed on startup, will try bot sync');
+                    requestPurchasesFromBot().catch(() => {
+                        // Silently fail if bot is not available
+                    });
+                });
+        } else {
+            // Пытаемся синхронизировать через бота
+            requestPurchasesFromBot().catch(() => {
+                // Silently fail if bot is not available
+            });
+        }
+    }, 1000);
+    
+    // Mark app as ready
+    document.body.classList.add('app-ready');
+}
+
+
+// Initialize when DOM is ready
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initApp);
+} else {
+    initApp();
+}
+
+// Export functions for global use
+window.TelegramApp = {
+    tg,
+    getUserData,
+    sendDataToBot,
+    trackUserAction,
+    openVideo,
+    addToFavorites,
+    shareVideo,
+    hapticFeedback,
+    navigateToPage,
+    getPurchasedTools,
+    addPurchasedTool,
+    updatePurchasedToolsFromBot,
+    renderPurchasedTools,
+    refreshPurchasedTools,
+    fetchPurchasesFromAPI
+};
+    </script>
+</body>
+</html>
